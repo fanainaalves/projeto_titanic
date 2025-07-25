@@ -1,0 +1,5 @@
+# Ignorar a pasta de ambiente virtual
+venv/
+
+# Ignorar arquivos do Windows
+desktop.ini

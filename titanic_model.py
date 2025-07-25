@@ -1,4 +1,3 @@
-
 # Titanic Survival Prediction - Projeto de Classificação com Análise do SVM
 import pandas as pd
 import numpy as np
@@ -117,4 +116,79 @@ sns.boxplot(data=df_comparativo)
 plt.title("Comparação detalhada - SVM vs RF vs GB")
 plt.ylabel("F1 Score")
 plt.grid(True)
+plt.show()
+
+# P8 - Análises gerais dos dados de sobrevivência e sexo
+
+# Gráfico 1: Distribuição geral de sobrevivência
+plt.figure(figsize=(6, 5))
+sns.countplot(x='Survived', data=pd.read_csv('train.csv'), palette='pastel')
+plt.xticks([0, 1], ['Não Sobreviveu', 'Sobreviveu'])
+plt.title('Distribuição de Sobrevivência')
+plt.xlabel('Sobreviveu')
+plt.ylabel('Quantidade')
+plt.grid(True, axis='y')
+plt.tight_layout()
+plt.show()
+
+# Gráfico 2: Sobrevivência por sexo (barras empilhadas)
+df_temp = pd.read_csv('train.csv')
+df_temp['Sex'] = df_temp['Sex'].map({'male': 'Homens', 'female': 'Mulheres'})
+sexo_surv_counts = pd.crosstab(df_temp['Sex'], df_temp['Survived'])
+sexo_surv_counts.columns = ['Não Sobreviveu', 'Sobreviveu']
+sexo_surv_counts.plot(kind='bar', stacked=True, figsize=(7, 5), color=['#ff9999','#66b3ff'])
+
+plt.title('Sobrevivência por Sexo (Barras Empilhadas)')
+plt.xlabel('Sexo')
+plt.ylabel('Quantidade')
+plt.grid(True, axis='y')
+plt.tight_layout()
+plt.show()
+
+# P9 - Análises adicionais: Sobrevivência por Pclass, Embarked, Age e Fare
+
+# Gráfico: Sobrevivência por Classe (Pclass)
+df_temp = pd.read_csv('train.csv')
+pclass_surv_counts = pd.crosstab(df_temp['Pclass'], df_temp['Survived'])
+pclass_surv_counts.columns = ['Não Sobreviveu', 'Sobreviveu']
+pclass_surv_counts.plot(kind='bar', stacked=True, figsize=(7, 5), color=['#ffcc99','#99ccff'])
+plt.title('Sobrevivência por Classe (Pclass)')
+plt.xlabel('Classe')
+plt.ylabel('Quantidade')
+plt.grid(True, axis='y')
+plt.tight_layout()
+plt.show()
+
+# Gráfico: Sobrevivência por Porto de Embarque (Embarked)
+df_temp['Embarked'] = df_temp['Embarked'].map({'S': 'Southampton', 'C': 'Cherbourg', 'Q': 'Queenstown'})
+embarked_surv_counts = pd.crosstab(df_temp['Embarked'], df_temp['Survived'])
+embarked_surv_counts.columns = ['Não Sobreviveu', 'Sobreviveu']
+embarked_surv_counts.plot(kind='bar', stacked=True, figsize=(7, 5), color=['#ffcc99','#99ccff'])
+plt.title('Sobrevivência por Porto de Embarque (Embarked)')
+plt.xlabel('Porto de Embarque')
+plt.ylabel('Quantidade')
+plt.grid(True, axis='y')
+plt.tight_layout()
+plt.show()
+
+# Gráfico: Boxplot de Idade por Sobrevivência
+plt.figure(figsize=(7, 5))
+sns.boxplot(x='Survived', y='Age', data=df_temp, palette='Set3')
+plt.xticks([0, 1], ['Não Sobreviveu', 'Sobreviveu'])
+plt.title('Distribuição de Idade por Sobrevivência')
+plt.xlabel('Sobreviveu')
+plt.ylabel('Idade')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+# Gráfico: Boxplot de Tarifa (Fare) por Sobrevivência
+plt.figure(figsize=(7, 5))
+sns.boxplot(x='Survived', y='Fare', data=df_temp, palette='Set2')
+plt.xticks([0, 1], ['Não Sobreviveu', 'Sobreviveu'])
+plt.title('Distribuição de Tarifa (Fare) por Sobrevivência')
+plt.xlabel('Sobreviveu')
+plt.ylabel('Tarifa')
+plt.grid(True)
+plt.tight_layout()
 plt.show()
